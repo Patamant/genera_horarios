@@ -105,14 +105,20 @@
     .firmas { display: none; }
     .cargando { padding: 40px; text-align: center; color: var(--suave); }
 
+    .pie { display: flex; justify-content: center; gap: 10px; padding: 14px 16px 22px; color: var(--suave); font-size: 12px;
+      border-top: 1px solid var(--borde); margin-top: 8px; }
+    .pie b { color: var(--azul); font-weight: 700; }
+    .pie span::before { content: '·'; margin-right: 10px; }
     .solo-print, .cab-res { display: none; }
     .cab-res { align-items: center; gap: 12px; border-bottom: 3px solid var(--oro); padding: 0 0 6px; margin-bottom: 8px; }
     .cab-res img { height: 46px; } .cab-res .t { flex: 1; font: 700 15px 'Fraunces', Georgia, serif; color: var(--cafe); }
     @media print {
-      @page { size: A4 landscape; margin: 9mm; }
-      body { background: #fff; font-size: 11px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      /* margen 0: el navegador ya no imprime la dirección web, fecha ni título */
+      @page { size: A4 landscape; margin: 0; }
+      body { background: #fff; padding: 9mm 9mm 14mm; font-size: 11px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .no-print, .tabs { display: none !important; }
       .solo-print { display: block; }
+      .pie { position: fixed; left: 0; right: 0; bottom: 4mm; margin: 0; padding: 0; border: 0; font-size: 9px; background: transparent; }
       main { padding: 0; max-width: none; }
       .cab { padding: 6px 10px; border-bottom-width: 3px; }
       .cab img.rest { width: 50px; height: 50px; }
@@ -201,7 +207,6 @@
           <label style="margin:0;text-transform:none;font-weight:400"><input type="checkbox" id="pSem" checked> Horario semanal</label>
           <label style="margin:0;text-transform:none;font-weight:400"><input type="checkbox" id="pRes" checked> Resumen mensual</label>
         </div>
-        <a class="link" id="linkHoja" target="_blank" href="#">Abrir hoja de cálculo ↗</a>
       </div>
       <div style="height:16px"></div>
     </section>
@@ -218,6 +223,8 @@
 
     <div class="firmas"><div>Elaborado por</div><div>Revisado por</div><div>Aprobado por</div></div>
   </main>
+
+  <footer class="pie"><b>Sistema FINAV 2026</b><span>Versión 2.1</span></footer>
 
 <script src="config.js"></script>
 <script>
@@ -239,7 +246,6 @@
     ROLES.forEach(function (r) { document.getElementById(r[0]).value = cfg.staff[r[0]] || ''; });
     feriados = (cfg.holidays || []).slice().sort();
     pintarChips();
-    if (url) document.getElementById('linkHoja').href = url;
   }
 
   function pintarChips() {
