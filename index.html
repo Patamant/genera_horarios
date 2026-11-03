@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Horarios · Maíz &amp; Yuca Cafetería</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/logo_maiz_yuca.jpg">
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cafe: #4A1F17; --cafe-2: #6B2D20; --crema: #FBF6EC; --crema-2: #F3E6CF;
+      --azul: #0B2A57; --oro: #C99A3B; --oro-claro: #F6EBD3;
+      --serv: #E8EEF8; --coc: #FBF1DE; --libre: #F1F1F1; --fer: #F8D7C4; --fer-txt: #9A3412;
+      --ok: #D8F0DF; --ok-txt: #166534; --mal: #FBD5D5; --mal-txt: #991B1B;
+      --texto: #1F2937; --suave: #6B7280; --borde: #E5E1D8; --fondo: #FAF7F1;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; color: var(--texto); background: var(--fondo); font-size: 14px; }
+    h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
+
+    .cab { display: flex; align-items: center; gap: 18px; padding: 14px 24px; background: var(--cafe); color: var(--crema);
+      border-bottom: 4px solid var(--oro); }
+    .cab img.rest { width: 68px; height: 68px; border-radius: 10px; border: 2px solid var(--oro); }
+    .cab .tit { flex: 1; }
+    .cab h1 { font-size: 24px; letter-spacing: .3px; }
+    .cab .sub { color: var(--crema-2); font-size: 13px; margin-top: 2px; }
+    .cab .finav { background: #fff; border-radius: 10px; padding: 4px 8px; display: flex; align-items: center; }
+    .cab .finav img { height: 56px; }
+
+    main { padding: 18px 24px 40px; max-width: 1500px; margin: 0 auto; }
+    .panel { background: #fff; border: 1px solid var(--borde); border-radius: 14px; padding: 16px 18px; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: 1.1fr 1.6fr 1.2fr; gap: 18px; }
+    @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+    .panel h2 { font-size: 16px; color: var(--cafe); margin-bottom: 10px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--suave); margin: 8px 0 3px; text-transform: uppercase; letter-spacing: .4px; }
+    input, select { width: 100%; padding: 8px 10px; border: 1px solid #D6CFC2; border-radius: 8px; font: inherit; background: #fff; }
+    input:focus, select:focus { outline: 2px solid var(--oro); border-color: var(--oro); }
+    .fila2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .persona { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .persona span { font-size: 12px; font-weight: 700; padding: 6px 8px; border-radius: 6px; text-align: center; }
+    .persona.s span { background: var(--serv); color: var(--azul); }
+    .persona.c span { background: var(--coc); color: var(--cafe); }
+    .nota { font-size: 12px; color: var(--suave); margin-top: 6px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; min-height: 28px; }
+    .chip { background: var(--fer); color: var(--fer-txt); border-radius: 999px; padding: 3px 6px 3px 10px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    .chip button { border: 0; background: transparent; color: var(--fer-txt); cursor: pointer; font-size: 14px; line-height: 1; }
+    .fer-add { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+
+    .acciones { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
+    .btn { border: 0; border-radius: 10px; padding: 11px 18px; font: 700 14px 'Source Sans 3', Arial; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+    .btn.gen { background: var(--azul); color: var(--oro); box-shadow: 0 2px 0 #061a37; }
+    .btn.gen:hover { background: #0f3672; }
+    .btn.imp { background: var(--cafe); color: var(--crema); }
+    .btn.imp:hover { background: var(--cafe-2); }
+    .btn.sec { background: var(--oro-claro); color: var(--cafe); padding: 8px 12px; }
+    .btn:disabled { opacity: .6; cursor: wait; }
+    a.link { color: var(--azul); font-weight: 600; font-size: 13px; }
+    .conexion summary { cursor: pointer; font-weight: 700; color: var(--cafe); }
+    .print-opts { display: flex; gap: 14px; font-size: 13px; color: var(--suave); }
+    .print-opts input { width: auto; }
+
+    .estado { border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-weight: 600; font-size: 13px; }
+    .estado.ok { background: var(--ok); color: var(--ok-txt); }
+    .estado.mal { background: var(--mal); color: var(--mal-txt); }
+    .estado.info { background: var(--oro-claro); color: var(--cafe); }
+    .estado ul { margin: 6px 0 0 18px; padding: 0; font-weight: 400; }
+
+    .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--borde); margin-bottom: 14px; }
+    .tab { border: 0; background: transparent; padding: 10px 16px; font: 700 14px 'Source Sans 3'; color: var(--suave); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+    .tab.act { color: var(--cafe); border-color: var(--oro); }
+
+    .semana { background: #fff; border: 1px solid var(--borde); border-radius: 12px; margin-bottom: 14px; overflow: hidden; }
+    .semana h3 { background: var(--azul); color: #fff; font-size: 14px; padding: 8px 12px; font-family: 'Source Sans 3'; font-weight: 700; display: flex; justify-content: space-between; }
+    .semana h3 em { font-style: normal; color: var(--oro); font-weight: 600; }
+    .tabla-wrap { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+    th, td { border: 1px solid var(--borde); padding: 5px 6px; text-align: center; white-space: nowrap; }
+    th { background: var(--cafe); color: var(--crema); font-weight: 700; font-size: 12px; }
+    th.fer { background: var(--fer-txt); }
+    th.fds { background: var(--azul); }
+    td.izq { text-align: left; font-weight: 700; }
+    tr.s td.izq { background: var(--serv); } tr.c td.izq { background: var(--coc); }
+    td.libre { background: var(--libre); color: var(--suave); }
+    td.fer { background: var(--fer); color: var(--fer-txt); font-weight: 700; }
+    td.turno { font-weight: 700; }
+    td.fuera { color: #A3A3A3; font-style: italic; }
+    td.num { background: var(--crema); }
+    td.tot { background: var(--oro-claro); font-weight: 700; }
+    td.ok { background: var(--ok); color: var(--ok-txt); font-weight: 700; }
+    td.mal { background: var(--mal); color: var(--mal-txt); font-weight: 700; }
+    .resumen td, .resumen th { padding: 4px 3px; font-size: 11px; }
+    .resumen td.d { min-width: 38px; }
+    .leyenda { font-size: 12px; color: var(--suave); margin-top: 8px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .leyenda b { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; border: 1px solid var(--borde); }
+    .firmas { display: none; }
+    .cargando { padding: 40px; text-align: center; color: var(--suave); }
+
+    .solo-print, .cab-res { display: none; }
+    .cab-res { align-items: center; gap: 12px; border-bottom: 3px solid var(--oro); padding: 0 0 6px; margin-bottom: 8px; }
+    .cab-res img { height: 46px; } .cab-res .t { flex: 1; font: 700 15px 'Fraunces', Georgia, serif; color: var(--cafe); }
+    @media print {
+      @page { size: A4 landscape; margin: 9mm; }
+      body { background: #fff; font-size: 11px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-print, .tabs { display: none !important; }
+      .solo-print { display: block; }
+      main { padding: 0; max-width: none; }
+      .cab { padding: 6px 10px; border-bottom-width: 3px; }
+      .cab img.rest { width: 50px; height: 50px; }
+      .cab .finav img { height: 44px; }
+      .cab h1 { font-size: 18px; }
+      .vista { display: block !important; }
+      .vista.oculta-print { display: none !important; }
+      .semana { break-inside: avoid; page-break-inside: avoid; border-radius: 6px; margin-bottom: 8px; }
+      .resumen-bloque { break-before: page; page-break-before: always; }
+      .resumen-bloque.primero { break-before: auto; page-break-before: auto; }
+      .resumen-bloque .cab-res { display: flex; }
+      .resumen-bloque.primero .cab-res { display: none; }
+      .tabla-wrap { overflow: visible; }
+      th, td { padding: 3px 4px; font-size: 10px; }
+      .resumen { table-layout: fixed; width: 100%; }
+      .resumen td, .resumen th { font-size: 7px; padding: 2px 0; white-space: normal; word-break: break-word; line-height: 1.15; }
+      .resumen td.izq { font-size: 7.5px; padding-left: 2px; }
+      .resumen td.d { min-width: 0; letter-spacing: -.2px; }
+      .firmas { display: flex; justify-content: space-around; margin-top: 34px; font-size: 11px; }
+      .firmas div { border-top: 1px solid #333; width: 220px; text-align: center; padding-top: 4px; }
+      .estado { padding: 6px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="cab">
+    <img class="rest" src="assets/logo_maiz_yuca.jpg" alt="Maíz & Yuca Cafetería">
+    <div class="tit">
+      <h1>Horarios del personal</h1>
+      <div class="sub" id="subtitulo">Maíz &amp; Yuca Cafetería · Servicio y Cocina</div>
+    </div>
+    <div class="finav"><img src="assets/logo_finav.png" alt="FINAV Financial Advisor"></div>
+  </header>
+
+  <main>
+    <section class="no-print">
+      <div class="grid">
+        <div class="panel">
+          <h2>Periodo</h2>
+          <div class="fila2">
+            <div><label for="mes">Mes</label><select id="mes"></select></div>
+            <div><label for="anio">Año</label><input id="anio" type="number" min="2000" max="2100"></div>
+          </div>
+          <label for="modo">Feriados</label>
+          <select id="modo">
+            <option value="PAGADO">Completar 40 h con feriado pagado</option>
+            <option value="REAL">Solo horas reales trabajadas</option>
+          </select>
+          <div class="nota">Turnos, almuerzo, lunes de referencia y rotación inicial se ajustan en la hoja <b>Parámetros y Personal</b>.</div>
+        </div>
+        <div class="panel">
+          <h2>Personal</h2>
+          <div class="persona s"><span>Servicio 1</span><input id="S1"></div>
+          <div class="persona s"><span>Servicio 2</span><input id="S2"></div>
+          <div class="persona s"><span>Servicio 3</span><input id="S3" title="Única y fija: sábados y domingos 07:00–14:00"></div>
+          <div class="persona c"><span>Cocina 1</span><input id="C1"></div>
+          <div class="persona c"><span>Cocina 2</span><input id="C2"></div>
+        </div>
+        <div class="panel">
+          <h2>Feriados <small style="font:600 12px 'Source Sans 3';color:var(--suave)">(07:00 – 14:00)</small></h2>
+          <div class="fer-add">
+            <input id="ferFecha" type="date">
+            <button class="btn sec" type="button" onclick="agregarFeriado()">+ Agregar</button>
+          </div>
+          <div class="chips" id="chips"></div>
+          <div class="nota">Ese día trabajan obligatoriamente Servicio 1, Servicio 2, Cocina 1 y Cocina 2 (más Servicio 3 si es fin de semana). El resto de la semana se recalcula para llegar a 40 h.</div>
+        </div>
+      </div>
+      <details class="panel conexion" id="conexion" style="display:none">
+        <summary>🔑 Conexión con Google Sheets</summary>
+        <div class="fila2" style="margin-top:8px">
+          <div id="apiUrlFila"><label for="apiUrl">URL de la API (aplicación web de Apps Script)</label>
+            <input id="apiUrl" placeholder="https://script.google.com/macros/s/…/exec"></div>
+          <div><label for="apiClave">Clave de acceso</label><input id="apiClave" type="password" autocomplete="current-password"></div>
+        </div>
+        <div class="acciones" style="margin-top:10px"><button class="btn sec" type="button" onclick="guardarConexion()">Guardar y conectar</button>
+          <span class="nota">Se guarda solo en este navegador. La clave se define en la hoja: menú 🗓 Horarios → 🔑 Clave de acceso web.</span></div>
+      </details>
+      <div class="acciones">
+        <button class="btn gen" id="btnGenerar" onclick="generar()">▶ Generar horarios</button>
+        <button class="btn imp" onclick="imprimir()">🖨 Imprimir</button>
+        <div class="print-opts">
+          <label style="margin:0;text-transform:none;font-weight:400"><input type="checkbox" id="pSem" checked> Horario semanal</label>
+          <label style="margin:0;text-transform:none;font-weight:400"><input type="checkbox" id="pRes" checked> Resumen mensual</label>
+        </div>
+        <a class="link" id="linkHoja" target="_blank" href="#">Abrir hoja de cálculo ↗</a>
+      </div>
+      <div style="height:16px"></div>
+    </section>
+
+    <div id="estado"></div>
+
+    <div class="tabs no-print">
+      <button class="tab act" data-v="sem" onclick="verTab('sem')">Horario semanal</button>
+      <button class="tab" data-v="res" onclick="verTab('res')">Resumen mensual</button>
+    </div>
+
+    <div id="vSem" class="vista"><div class="cargando">Cargando…</div></div>
+    <div id="vRes" class="vista resumen-bloque" style="display:none"></div>
+
+    <div class="firmas"><div>Elaborado por</div><div>Revisado por</div><div>Aprobado por</div></div>
+  </main>
+
+<script src="config.js"></script>
+<script>
+  var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var ROLES = [['S1','Servicio 1','s'],['S2','Servicio 2','s'],['S3','Servicio 3','s'],['C1','Cocina 1','c'],['C2','Cocina 2','c']];
+  var feriados = [];
+  var ultimo = null;
+
+  document.getElementById('mes').innerHTML = MESES.map(function (m, i) { return '<option value="' + (i + 1) + '">' + m + '</option>'; }).join('');
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fmt(ymd) { var p = ymd.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+  function num(n) { return (Math.round(n * 100) / 100).toString().replace('.', ','); }
+
+  function cargarForm(cfg, url) {
+    document.getElementById('mes').value = cfg.month;
+    document.getElementById('anio').value = cfg.year;
+    document.getElementById('modo').value = cfg.holidayMode;
+    ROLES.forEach(function (r) { document.getElementById(r[0]).value = cfg.staff[r[0]] || ''; });
+    feriados = (cfg.holidays || []).slice().sort();
+    pintarChips();
+    if (url) document.getElementById('linkHoja').href = url;
+  }
+
+  function pintarChips() {
+    document.getElementById('chips').innerHTML = feriados.length ? feriados.map(function (f, i) {
+      return '<span class="chip">' + fmt(f) + '<button title="Quitar" onclick="quitarFeriado(' + i + ')">×</button></span>';
+    }).join('') : '<span class="nota">Sin feriados registrados.</span>';
+  }
+  function agregarFeriado() {
+    var v = document.getElementById('ferFecha').value;
+    if (v && feriados.indexOf(v) < 0) { feriados.push(v); feriados.sort(); pintarChips(); }
+    document.getElementById('ferFecha').value = '';
+  }
+  function quitarFeriado(i) { feriados.splice(i, 1); pintarChips(); }
+
+  function datosForm() {
+    var staff = {};
+    ROLES.forEach(function (r) { staff[r[0]] = document.getElementById(r[0]).value.trim(); });
+    return { month: Number(document.getElementById('mes').value), year: Number(document.getElementById('anio').value),
+      holidayMode: document.getElementById('modo').value, staff: staff, holidays: feriados };
+  }
+
+  function ocupado(b) {
+    var btn = document.getElementById('btnGenerar');
+    btn.disabled = b; btn.textContent = b ? 'Generando…' : '▶ Generar horarios';
+  }
+
+  /* ---------- Conexión: Apps Script directo o API (GitHub Pages) ---------- */
+  var EN_APPS_SCRIPT = typeof google !== 'undefined' && google.script && google.script.run;
+  var CONF = window.HORARIOS_CONFIG || {};
+  function leerLocal(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function guardarLocal(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* sin almacenamiento */ } }
+  function apiUrl() { return CONF.apiUrl || leerLocal('horarios_api_url'); }
+  function claveAcceso() { return leerLocal('horarios_clave'); }
+
+  function llamar(accion, datos, ok, err) {
+    if (EN_APPS_SCRIPT) {
+      var run = google.script.run.withSuccessHandler(ok).withFailureHandler(function (e) { err(e.message || String(e)); });
+      if (accion === 'cargar') run.apiCargar(); else run.apiGenerar(datos);
+      return;
+    }
+    if (!apiUrl() || !claveAcceso()) { mostrarConexion(true); err('Ingrese la URL de la API y la clave de acceso en "Conexión".'); return; }
+    fetch(apiUrl(), {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // evita la verificación previa de CORS
+      body: JSON.stringify({ accion: accion, clave: claveAcceso(), datos: datos || null })
+    }).then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.ok) { ok(j.data); return; }
+        if (j.codigo === 'CLAVE') mostrarConexion(true);
+        err(j.error);
+      })
+      .catch(function (e) { err('No se pudo conectar con Google Sheets. Revise la URL de la API y que la aplicación web esté implementada con acceso "Cualquier usuario". (' + e.message + ')'); });
+  }
+
+  function mostrarConexion(abrir) {
+    var c = document.getElementById('conexion');
+    if (!c) return;
+    c.style.display = EN_APPS_SCRIPT ? 'none' : '';
+    document.getElementById('apiUrl').value = apiUrl();
+    document.getElementById('apiUrlFila').style.display = CONF.apiUrl ? 'none' : '';
+    document.getElementById('apiClave').value = claveAcceso();
+    if (abrir) c.open = true;
+  }
+  function guardarConexion() {
+    if (!CONF.apiUrl) guardarLocal('horarios_api_url', document.getElementById('apiUrl').value.trim());
+    guardarLocal('horarios_clave', document.getElementById('apiClave').value.trim());
+    document.getElementById('conexion').open = false;
+    cargar();
+  }
+
+  function cargar() {
+    if (!EN_APPS_SCRIPT && (!apiUrl() || !claveAcceso())) {
+      mostrarConexion(true);
+      document.getElementById('estado').innerHTML = '<div class="estado info">Para empezar, abra <b>🔑 Conexión con Google Sheets</b>, ingrese la clave de acceso y pulse <b>Guardar y conectar</b>.</div>';
+      return;
+    }
+    document.getElementById('estado').innerHTML = '<div class="estado info">Conectando con la hoja de cálculo…</div>';
+    llamar('cargar', null, function (r) { recibir(r, false); }, mostrarError);
+  }
+
+  function generar() {
+    ocupado(true);
+    llamar('generar', datosForm(), function (r) { ocupado(false); recibir(r, true); },
+      function (e) { ocupado(false); mostrarError(e); });
+  }
+
+  function recibir(r, generado) {
+    cargarForm(r.config, r.url);
+    if (r.error) { mostrarError(r.error); return; }
+    ultimo = r.resultado;
+    render(r.resultado, generado);
+  }
+
+  function mostrarError(msg) {
+    document.getElementById('estado').innerHTML = '<div class="estado mal">No se pudo generar el horario:<ul>' +
+      String(msg).split('\n').map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>';
+  }
+
+  function render(res, generado) {
+    document.getElementById('subtitulo').textContent = 'Maíz & Yuca Cafetería · ' + res.meta.mesNombre + ' ' + res.meta.year +
+      ' · Semanas del ' + fmt(res.meta.desde) + ' al ' + fmt(res.meta.hasta);
+    var est = document.getElementById('estado');
+    if (!res.incidencias.length) {
+      est.innerHTML = '<div class="estado ok">✔ ' + (generado ? 'Horario generado y guardado en la hoja. ' : 'Vista previa. ') +
+        'Se cumplen todas las reglas: ' + res.meta.target + ' h semanales para Servicio 1-2 y Cocina 1-2, rotación de días libres, Servicio 3 fijo sábados y domingos, cobertura diaria completa.' +
+        (res.meta.feriados.length ? ' Feriados: ' + res.meta.feriados.map(fmt).join(', ') + '.' : '') + '</div>';
+    } else {
+      est.innerHTML = '<div class="estado mal">Revise las siguientes observaciones:<ul>' +
+        res.incidencias.map(function (i) { return '<li>' + esc(i.mensaje) + '</li>'; }).join('') + '</ul></div>';
+    }
+    if (!generado) est.innerHTML += '<div class="estado info no-print">Pulse <b>Generar horarios</b> para guardar los cambios en las hojas "Listado Horarios" y "Resumen".</div>';
+    document.getElementById('vSem').innerHTML = htmlSemanas(res);
+    document.getElementById('vRes').innerHTML = htmlResumen(res);
+  }
+
+  function celda(a, d) {
+    var cls = a ? (a.feriado ? 'fer' : 'turno') : 'libre';
+    if (!d.enMes) cls += ' fuera';
+    return '<td class="' + cls + '">' + (a ? a.entrada + '–' + a.salida : 'LIBRE') + '</td>';
+  }
+
+  function htmlSemanas(res) {
+    return res.semanas.map(function (s) {
+      var h = '<div class="semana"><h3><span>' + esc(s.etiqueta) + '</span>' + (s.hayFeriado ? '<em>incluye feriado</em>' : '') + '</h3>';
+      h += '<div class="tabla-wrap"><table><thead><tr><th>Cargo</th><th>Persona</th>';
+      s.dias.forEach(function (d) { h += '<th class="' + (d.feriado ? 'fer' : (d.dow >= 5 ? 'fds' : '')) + '">' + esc(d.etiqueta) + (d.feriado ? '<br>FERIADO' : '') + '</th>'; });
+      h += '<th>Horas trab.</th><th>Feriado pag.</th><th>Total</th><th>Estado</th></tr></thead><tbody>';
+      ROLES.forEach(function (r) {
+        var t = s.totales[r[0]];
+        var es40 = r[0] !== 'S3';
+        h += '<tr class="' + r[2] + '"><td class="izq">' + r[1] + '</td><td class="izq">' + esc(res.meta.staff[r[0]]) + '</td>';
+        s.dias.forEach(function (d) {
+          var a = null; d.asignaciones.forEach(function (x) { if (x.rol === r[0]) a = x; });
+          h += celda(a, d);
+        });
+        h += '<td class="num">' + num(t.trabajadas) + '</td><td class="num">' + (es40 ? num(t.pagadas) : '–') + '</td><td class="tot">' + num(t.total) + '</td>';
+        h += '<td class="' + (t.estado === 'OK' ? 'ok' : 'mal') + '">' + (es40 ? (t.estado === 'OK' ? '✔ OK' : '✖ ' + t.estado) : '✔ Fijo') + '</td></tr>';
+      });
+      return h + '</tbody></table></div></div>';
+    }).join('') + '<div class="leyenda"><span><b style="background:var(--libre)"></b>Libre</span><span><b style="background:var(--fer)"></b>Feriado 07:00–14:00</span><span><i style="color:#A3A3A3">Cursiva gris</i> = día fuera del mes (completa la semana)</span><span>Horas netas (descuentan almuerzo configurado)</span></div>';
+  }
+
+  function corto(a) {
+    var f = function (s) { return s.slice(3) === '00' ? String(Number(s.slice(0, 2))) : Number(s.slice(0, 2)) + ':' + s.slice(3); };
+    return f(a.entrada) + '-' + f(a.salida);
+  }
+
+  function htmlResumen(res) {
+    var y = res.meta.year, m = res.meta.month, n = res.meta.diasMes;
+    var letras = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+    var dias = [];
+    for (var d = 1; d <= n; d++) {
+      var k = y + '-' + (m < 10 ? '0' : '') + m + '-' + (d < 10 ? '0' : '') + d;
+      var dow = (new Date(Date.UTC(y, m - 1, d)).getUTCDay() + 6) % 7;
+      dias.push({ k: k, d: d, l: letras[dow], fds: dow >= 5, fer: res.meta.feriados.indexOf(k) >= 0 });
+    }
+    var cg = '<colgroup><col style="width:5.5%"><col style="width:6.5%">' + dias.map(function () { return '<col>'; }).join('') +
+      res.semanas.map(function () { return '<col style="width:2.6%">'; }).join('') + '<col style="width:3.4%"><col style="width:2.8%"><col style="width:3.4%"><col style="width:2.8%"><col style="width:2.8%"><col style="width:4.2%"></colgroup>';
+    var lr = document.querySelector('.cab img.rest').src, lf = document.querySelector('.cab .finav img').src;
+    var h = '<div class="cab-res"><img src="' + lr + '" alt="Maíz & Yuca"><div class="t">Maíz &amp; Yuca Cafetería · Resumen mensual de horarios</div><img src="' + lf + '" alt="FINAV"></div>';
+    h += '<div class="semana"><h3><span>Resumen mensual · ' + res.meta.mesNombre + ' ' + y + '</span><em>' + res.meta.target + ' h semanales</em></h3><div class="tabla-wrap"><table class="resumen">' + cg + '<thead><tr><th rowspan="2">Cargo</th><th rowspan="2">Persona</th>';
+    dias.forEach(function (x) { h += '<th class="' + (x.fer ? 'fer' : (x.fds ? 'fds' : '')) + '">' + x.d + '</th>'; });
+    res.semanas.forEach(function (s) { h += '<th class="fds">S' + s.numero + '</th>'; });
+    h += '<th rowspan="2">Horas mes</th><th rowspan="2">Fer. pag.</th><th rowspan="2">Total mes</th><th rowspan="2">Días trab.</th><th rowspan="2">Días libres</th><th rowspan="2">Estado</th></tr><tr>';
+    dias.forEach(function (x) { h += '<th class="' + (x.fer ? 'fer' : (x.fds ? 'fds' : '')) + '">' + (x.fer ? 'F' : x.l) + '</th>'; });
+    res.semanas.forEach(function (s) { h += '<th class="fds" style="font-weight:400">' + s.desde.slice(8) + '/' + s.desde.slice(5, 7) + '</th>'; });
+    h += '</tr></thead><tbody>';
+    res.resumen.forEach(function (p) {
+      var cls = p.area === 'Cocina' ? 'c' : 's';
+      var es40 = p.rol !== 'S3';
+      h += '<tr class="' + cls + '"><td class="izq">' + esc(p.cargo) + '</td><td class="izq">' + esc(p.persona) + '</td>';
+      dias.forEach(function (x) {
+        var a = p.porDia[x.k];
+        h += '<td class="d ' + (a ? (a.feriado ? 'fer' : 'turno') : 'libre') + '">' + (a ? corto(a) : 'L') + '</td>';
+      });
+      p.semanas.forEach(function (s) { h += '<td class="' + (!es40 ? 'num' : (s.estado === 'OK' ? 'ok' : 'mal')) + '">' + num(s.total) + '</td>'; });
+      h += '<td class="num">' + num(p.horasMes) + '</td><td class="num">' + (es40 ? num(p.pagadasMes) : '–') + '</td><td class="tot">' + num(p.totalMes) + '</td><td class="num">' + p.diasTrabajados + '</td><td class="num">' + p.diasLibres + '</td>';
+      h += '<td class="' + (p.estado === 'OK' ? 'ok' : 'mal') + '">' + (p.estado === 'OK' ? '✔ OK' : '✖ Revisar') + '</td></tr>';
+    });
+    ['Servicio', 'Cocina'].forEach(function (area) {
+      h += '<tr><td class="izq" style="background:var(--crema)">Cobertura</td><td class="izq" style="background:var(--crema)">' + area + '</td>';
+      dias.forEach(function (x) {
+        var c = 0; res.resumen.forEach(function (p) { if (p.area === area && p.porDia[x.k]) c++; });
+        h += '<td class="num">' + c + '</td>';
+      });
+      h += '<td colspan="' + (res.semanas.length + 6) + '" style="background:var(--crema)"></td></tr>';
+    });
+    h += '</tbody></table></div></div>';
+    h += '<div class="leyenda"><span>L = libre</span><span>F = feriado (07:00–14:00)</span><span>S1…S' + res.semanas.length + ' = total de horas por semana (lunes a domingo, incluye feriado pagado)</span><span>Horas mes = horas netas trabajadas dentro del mes</span></div>';
+    return h;
+  }
+
+  function verTab(v) {
+    document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('act', t.getAttribute('data-v') === v); });
+    document.getElementById('vSem').style.display = v === 'sem' ? '' : 'none';
+    document.getElementById('vRes').style.display = v === 'res' ? '' : 'none';
+  }
+
+  function imprimir() {
+    if (!ultimo) { alert('Primero genere el horario.'); return; }
+    var sem = document.getElementById('pSem').checked, res = document.getElementById('pRes').checked;
+    document.getElementById('vSem').classList.toggle('oculta-print', !sem);
+    document.getElementById('vRes').classList.toggle('oculta-print', !res);
+    document.getElementById('vRes').classList.toggle('primero', !sem);
+    window.print();
+  }
+
+  // Inicio: demo local, Apps Script o GitHub Pages
+  mostrarConexion(false);
+  if (window.DEMO) recibir(window.DEMO, true);
+  else cargar();
+</script>
+</body>
+</html>
