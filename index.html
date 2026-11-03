@@ -6,259 +6,411 @@
   <link rel="icon" href="assets/logo_maiz_yuca.jpg">
   <meta charset="utf-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ============ Identidad FINAV ============ */
     :root {
-      --cafe: #4A1F17; --cafe-2: #6B2D20; --crema: #FBF6EC; --crema-2: #F3E6CF;
-      --azul: #0B2A57; --oro: #C99A3B; --oro-claro: #F6EBD3;
-      --serv: #E8EEF8; --coc: #FBF1DE; --libre: #F1F1F1; --fer: #F8D7C4; --fer-txt: #9A3412;
-      --ok: #D8F0DF; --ok-txt: #166534; --mal: #FBD5D5; --mal-txt: #991B1B;
-      --texto: #1F2937; --suave: #6B7280; --borde: #E5E1D8; --fondo: #FAF7F1;
+      --navy: #0B2A57; --navy-2: #133A73; --navy-3: #1E4A8C; --navy-050: #EEF2F8; --navy-100: #DCE4F0;
+      --gold: #C2922F; --gold-2: #A97B1F; --gold-050: #FBF4E6; --gold-100: #F3E3C0;
+      --bg: #F4F6FA; --card: #FFFFFF; --borde: #E3E8F0; --borde-2: #CFD7E3;
+      --texto: #1B2433; --suave: #5B6577; --tenue: #98A2B3;
+      --ok: #12805C; --ok-bg: #E6F4EE; --mal: #B42318; --mal-bg: #FDECEA; --info-bg: #EEF2F8;
+      --libre: #F2F4F7; --fer: #FBF1DC; --fer-txt: #8A5A00;
+      --radio: 12px; --sombra: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+      --tit: 'Montserrat', 'Segoe UI', Arial, sans-serif; --cuerpo: 'Inter', 'Segoe UI', Arial, sans-serif;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; color: var(--texto); background: var(--fondo); font-size: 14px; }
-    h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
+    html, body { margin: 0; }
+    body { font-family: var(--cuerpo); color: var(--texto); background: var(--bg); font-size: 14px; line-height: 1.45; }
+    h1, h2, h3 { font-family: var(--tit); margin: 0; letter-spacing: -.01em; }
+    button { font-family: inherit; }
+    :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
 
-    .cab { display: flex; align-items: center; gap: 18px; padding: 14px 24px; background: var(--cafe); color: var(--crema);
-      border-bottom: 4px solid var(--oro); }
-    .cab img.rest { width: 68px; height: 68px; border-radius: 10px; border: 2px solid var(--oro); }
-    .cab .tit { flex: 1; }
-    .cab h1 { font-size: 24px; letter-spacing: .3px; }
-    .cab .sub { color: var(--crema-2); font-size: 13px; margin-top: 2px; }
-    .cab .finav { background: #fff; border-radius: 10px; padding: 4px 8px; display: flex; align-items: center; }
-    .cab .finav img { height: 56px; }
+    /* ---------- Barra superior ---------- */
+    .barra { background: var(--navy); color: #fff; height: 64px; display: flex; align-items: center; gap: 16px; padding: 0 24px;
+      border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 40; }
+    .marca { display: flex; align-items: center; gap: 12px; }
+    .marca .logo-finav { background: #fff; border-radius: 8px; height: 44px; width: 52px; display: grid; place-items: center; padding: 3px; }
+    .marca .logo-finav img { max-height: 38px; max-width: 46px; }
+    .marca .nombre { font-family: var(--tit); font-weight: 700; font-size: 16px; letter-spacing: .06em; }
+    .marca .nombre small { display: block; font: 500 11px var(--cuerpo); letter-spacing: .02em; color: var(--navy-100); }
+    .barra .sep { width: 1px; height: 32px; background: rgba(255,255,255,.18); }
+    .cliente { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--navy-100); }
+    .cliente img { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,.25); }
+    .cliente b { display: block; color: #fff; font-size: 13px; font-weight: 600; }
+    .espacio { flex: 1; }
 
-    main { padding: 18px 24px 40px; max-width: 1500px; margin: 0 auto; }
-    .panel { background: #fff; border: 1px solid var(--borde); border-radius: 14px; padding: 16px 18px; margin-bottom: 16px; }
-    .grid { display: grid; grid-template-columns: 1.1fr 1.6fr 1.2fr; gap: 18px; }
-    @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
-    .panel h2 { font-size: 16px; color: var(--cafe); margin-bottom: 10px; }
-    label { display: block; font-size: 12px; font-weight: 600; color: var(--suave); margin: 8px 0 3px; text-transform: uppercase; letter-spacing: .4px; }
-    input, select { width: 100%; padding: 8px 10px; border: 1px solid #D6CFC2; border-radius: 8px; font: inherit; background: #fff; }
-    input:focus, select:focus { outline: 2px solid var(--oro); border-color: var(--oro); }
-    .fila2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .persona { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .persona span { font-size: 12px; font-weight: 700; padding: 6px 8px; border-radius: 6px; text-align: center; }
-    .persona.s span { background: var(--serv); color: var(--azul); }
-    .persona.c span { background: var(--coc); color: var(--cafe); }
-    .nota { font-size: 12px; color: var(--suave); margin-top: 6px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; min-height: 28px; }
-    .chip { background: var(--fer); color: var(--fer-txt); border-radius: 999px; padding: 3px 6px 3px 10px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
-    .chip button { border: 0; background: transparent; color: var(--fer-txt); cursor: pointer; font-size: 14px; line-height: 1; }
-    .fer-add { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
-
-    .acciones { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
-    .btn { border: 0; border-radius: 10px; padding: 11px 18px; font: 700 14px 'Source Sans 3', Arial; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
-    .btn.gen { background: var(--azul); color: var(--oro); box-shadow: 0 2px 0 #061a37; }
-    .btn.gen:hover { background: #0f3672; }
-    .btn.imp { background: var(--cafe); color: var(--crema); }
-    .btn.imp:hover { background: var(--cafe-2); }
-    .btn.sec { background: var(--oro-claro); color: var(--cafe); padding: 8px 12px; }
-    .btn:disabled { opacity: .6; cursor: wait; }
-    a.link { color: var(--azul); font-weight: 600; font-size: 13px; }
     .menu-conf { position: relative; }
-    .btn-menu { background: transparent; color: var(--crema); border: 1px solid rgba(243,230,207,.45); border-radius: 8px;
-      padding: 8px 12px; font: 600 13px 'Source Sans 3', Arial; cursor: pointer; }
-    .btn-menu:hover, .menu-conf.abierto .btn-menu { background: rgba(255,255,255,.12); }
-    .desplegable { display: none; position: absolute; right: 0; top: calc(100% + 8px); width: 340px; max-width: calc(100vw - 32px);
-      background: #fff; color: var(--texto); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px;
-      box-shadow: 0 12px 32px rgba(0,0,0,.18); z-index: 50; }
+    .btn-menu { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.3); border-radius: 8px;
+      padding: 8px 12px; font: 600 13px var(--cuerpo); cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .btn-menu:hover, .menu-conf.abierto .btn-menu { background: rgba(255,255,255,.1); border-color: var(--gold); }
+    .desplegable { display: none; position: absolute; right: 0; top: calc(100% + 10px); width: 340px; max-width: calc(100vw - 32px);
+      background: #fff; color: var(--texto); border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px;
+      box-shadow: 0 16px 40px rgba(11,42,87,.22); z-index: 50; }
     .menu-conf.abierto .desplegable { display: block; }
-    .desp-tit { font-weight: 700; color: var(--cafe); margin-bottom: 2px; }
-    .btn-link { border: 0; background: none; color: var(--suave); font: 12px 'Source Sans 3', Arial, sans-serif; text-decoration: underline; cursor: pointer; padding: 6px 0 0; }
-    .print-opts { display: flex; gap: 14px; font-size: 13px; color: var(--suave); }
-    .print-opts input { width: auto; }
+    .desp-tit { font: 700 14px var(--tit); color: var(--navy); }
+    .desp-sub { font-size: 12px; color: var(--suave); margin: 2px 0 6px; }
+    .btn-link { border: 0; background: none; color: var(--suave); font-size: 12px; text-decoration: underline; cursor: pointer; padding: 8px 0 0; }
 
-    .estado { border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-weight: 600; font-size: 13px; }
-    .estado.ok { background: var(--ok); color: var(--ok-txt); }
-    .estado.mal { background: var(--mal); color: var(--mal-txt); }
-    .estado.info { background: var(--oro-claro); color: var(--cafe); }
-    .estado ul { margin: 6px 0 0 18px; padding: 0; font-weight: 400; }
+    /* ---------- Estructura ---------- */
+    .contenedor { max-width: 1560px; margin: 0 auto; padding: 20px 24px 8px; }
+    .encabezado { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .migas { font-size: 12px; color: var(--suave); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+    .encabezado h1 { font-size: 24px; color: var(--navy); margin-top: 2px; }
+    .encabezado .periodo { color: var(--suave); font-size: 13px; margin-top: 2px; }
+    .acciones-top { display: flex; gap: 8px; align-items: center; }
+    .layout { display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 20px; align-items: start; }
+    @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } .lateral { position: static !important; } }
 
-    .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--borde); margin-bottom: 14px; }
-    .tab { border: 0; background: transparent; padding: 10px 16px; font: 700 14px 'Source Sans 3'; color: var(--suave); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
-    .tab.act { color: var(--cafe); border-color: var(--oro); }
+    .tarjeta { background: var(--card); border: 1px solid var(--borde); border-radius: var(--radio); box-shadow: var(--sombra); }
 
-    .semana { background: #fff; border: 1px solid var(--borde); border-radius: 12px; margin-bottom: 14px; overflow: hidden; }
-    .semana h3 { background: var(--azul); color: #fff; font-size: 14px; padding: 8px 12px; font-family: 'Source Sans 3'; font-weight: 700; display: flex; justify-content: space-between; }
-    .semana h3 em { font-style: normal; color: var(--oro); font-weight: 600; }
+    /* ---------- Panel lateral (parámetros) ---------- */
+    .lateral { position: sticky; top: 84px; max-height: calc(100vh - 100px); overflow: auto; scrollbar-width: thin; scrollbar-color: var(--borde-2) transparent; }
+    .paso { padding: 16px 18px; border-bottom: 1px solid var(--borde); }
+    .paso:last-of-type { border-bottom: 0; }
+    .paso h2 { font-size: 13px; color: var(--navy); display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+    .paso h2 .n { width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-size: 11px; letter-spacing: 0; }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--suave); margin: 10px 0 4px; }
+    input, select { width: 100%; padding: 9px 11px; border: 1px solid var(--borde-2); border-radius: 8px; font: 14px var(--cuerpo); color: var(--texto); background: #fff; }
+    input:hover, select:hover { border-color: var(--navy-3); }
+    input:focus, select:focus { outline: none; border-color: var(--navy-3); box-shadow: 0 0 0 3px rgba(30,74,140,.18); }
+    input.error { border-color: var(--mal); box-shadow: 0 0 0 3px rgba(180,35,24,.12); }
+    .fila2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+    .fila2 label { margin-top: 0; }
+    .grupo-area { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--tenue); margin: 12px 0 2px; }
+    .grupo-area:first-of-type { margin-top: 0; }
+    .persona { display: grid; grid-template-columns: 86px 1fr; align-items: center; gap: 8px; margin-top: 6px; }
+    .persona label { margin: 0; font-size: 12px; color: var(--texto); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .punto { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+    .punto.s { background: var(--navy-3); } .punto.c { background: var(--gold); }
+    .ayuda { font-size: 12px; color: var(--suave); margin-top: 8px; }
+    .err-msg { font-size: 12px; color: var(--mal); margin-top: 8px; display: none; }
+    .fer-add { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .chip { background: var(--gold-050); color: var(--fer-txt); border: 1px solid var(--gold-100); border-radius: 999px; padding: 4px 4px 4px 10px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px; }
+    .chip button { border: 0; background: transparent; color: var(--fer-txt); cursor: pointer; width: 22px; height: 22px; border-radius: 50%; font-size: 15px; line-height: 1; }
+    .chip button:hover { background: var(--gold-100); }
+    .vacio-chips { font-size: 12px; color: var(--tenue); }
+    .pie-lateral { padding: 14px 18px; border-top: 1px solid var(--borde); background: #FAFBFD; border-radius: 0 0 var(--radio) var(--radio); position: sticky; bottom: 0; }
+    .aviso-cambios { display: none; font-size: 12px; color: var(--fer-txt); background: var(--gold-050); border: 1px solid var(--gold-100); border-radius: 8px; padding: 6px 10px; margin-bottom: 10px; }
+    .aviso-cambios.visible { display: block; }
+
+    /* ---------- Botones ---------- */
+    .btn { border: 1px solid transparent; border-radius: 8px; padding: 10px 16px; font: 600 14px var(--cuerpo); cursor: pointer; display: inline-flex; gap: 8px; align-items: center; justify-content: center; transition: background .15s, border-color .15s; }
+    .btn.primario { background: var(--navy); color: #fff; }
+    .btn.primario:hover { background: var(--navy-2); }
+    .btn.primario .acento { color: var(--gold); }
+    .btn.secundario { background: #fff; color: var(--navy); border-color: var(--borde-2); }
+    .btn.secundario:hover { border-color: var(--navy-3); background: var(--navy-050); }
+    .btn.suave { background: var(--navy-050); color: var(--navy); padding: 9px 12px; }
+    .btn.suave:hover { background: var(--navy-100); }
+    .btn.ancho { width: 100%; }
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
+    .giro { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.35); border-top-color: var(--gold); border-radius: 50%; animation: giro .8s linear infinite; display: none; }
+    .btn.cargando .giro { display: inline-block; }
+    @keyframes giro { to { transform: rotate(360deg); } }
+    .opc-imp { display: flex; gap: 12px; font-size: 12px; color: var(--suave); }
+    .opc-imp label { margin: 0; font-weight: 500; display: flex; gap: 6px; align-items: center; color: var(--suave); }
+    .opc-imp input { width: auto; accent-color: var(--navy); }
+
+    /* ---------- Indicadores ---------- */
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+    @media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+    .kpi { padding: 14px 16px; position: relative; overflow: hidden; }
+    .kpi::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--navy); }
+    .kpi.oro::before { background: var(--gold); } .kpi.verde::before { background: var(--ok); } .kpi.rojo::before { background: var(--mal); }
+    .kpi .et { font-size: 12px; color: var(--suave); font-weight: 600; }
+    .kpi .val { font: 700 24px var(--tit); color: var(--navy); margin-top: 2px; }
+    .kpi .val small { font: 500 13px var(--cuerpo); color: var(--suave); }
+    .kpi .det { font-size: 12px; color: var(--suave); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .estado { border-radius: 10px; padding: 11px 14px; margin-bottom: 14px; font-size: 13px; display: flex; gap: 10px; align-items: flex-start; border: 1px solid transparent; }
+    .estado .ico { font-weight: 700; }
+    .estado.ok { background: var(--ok-bg); color: var(--ok); border-color: #C5E6D6; }
+    .estado.mal { background: var(--mal-bg); color: var(--mal); border-color: #F6C9C4; }
+    .estado.info { background: var(--info-bg); color: var(--navy); border-color: var(--navy-100); }
+    .estado ul { margin: 4px 0 0 18px; padding: 0; }
+
+    /* ---------- Pestañas y navegación ---------- */
+    .barra-vista { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .segmentado { display: inline-flex; background: #fff; border: 1px solid var(--borde); border-radius: 10px; padding: 3px; }
+    .tab { border: 0; background: transparent; padding: 8px 14px; font: 600 13px var(--cuerpo); color: var(--suave); cursor: pointer; border-radius: 7px; }
+    .tab.act { background: var(--navy); color: #fff; }
+    .ir-semana { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--suave); }
+    .ir-semana button { border: 1px solid var(--borde); background: #fff; border-radius: 999px; padding: 4px 10px; font: 600 12px var(--cuerpo); color: var(--navy); cursor: pointer; }
+    .ir-semana button:hover { border-color: var(--navy-3); }
+    .ir-semana button.f { border-color: var(--gold); background: var(--gold-050); }
+
+    /* ---------- Tablas ---------- */
+    .semana { background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); margin-bottom: 14px; overflow: hidden; box-shadow: var(--sombra); scroll-margin-top: 90px; }
+    .semana-cab { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--borde); }
+    .semana-cab h3 { font-size: 14px; color: var(--navy); }
+    .semana-cab .rango { color: var(--suave); font: 500 13px var(--cuerpo); margin-left: 8px; }
+    .etiqueta { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; letter-spacing: .03em; }
+    .etiqueta.fer { background: var(--fer); color: var(--fer-txt); }
+    .etiqueta.ok { background: var(--ok-bg); color: var(--ok); }
+    .etiqueta.mal { background: var(--mal-bg); color: var(--mal); }
     .tabla-wrap { overflow-x: auto; }
-    table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
-    th, td { border: 1px solid var(--borde); padding: 5px 6px; text-align: center; white-space: nowrap; }
-    th { background: var(--cafe); color: var(--crema); font-weight: 700; font-size: 12px; }
-    th.fer { background: var(--fer-txt); }
-    th.fds { background: var(--azul); }
-    td.izq { text-align: left; font-weight: 700; }
-    tr.s td.izq { background: var(--serv); } tr.c td.izq { background: var(--coc); }
-    td.libre { background: var(--libre); color: var(--suave); }
-    td.fer { background: var(--fer); color: var(--fer-txt); font-weight: 700; }
-    td.turno { font-weight: 700; }
-    td.fuera { color: #A3A3A3; font-style: italic; }
-    td.num { background: var(--crema); }
-    td.tot { background: var(--oro-claro); font-weight: 700; }
-    td.ok { background: var(--ok); color: var(--ok-txt); font-weight: 700; }
-    td.mal { background: var(--mal); color: var(--mal-txt); font-weight: 700; }
-    .resumen td, .resumen th { padding: 4px 3px; font-size: 11px; }
-    .resumen td.d { min-width: 38px; }
-    .leyenda { font-size: 12px; color: var(--suave); margin-top: 8px; display: flex; gap: 14px; flex-wrap: wrap; }
-    .leyenda b { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; border: 1px solid var(--borde); }
-    .firmas { display: none; }
-    .cargando { padding: 40px; text-align: center; color: var(--suave); }
+    table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 12.5px; }
+    th, td { border-bottom: 1px solid var(--borde); border-right: 1px solid var(--borde); padding: 7px 6px; text-align: center; white-space: nowrap; }
+    tr > :last-child { border-right: 0; }
+    tbody tr:last-child td { border-bottom: 0; }
+    th { background: var(--navy); color: #fff; font-weight: 600; font-size: 12px; border-color: rgba(255,255,255,.12); }
+    th .sub { display: block; font-weight: 500; font-size: 11px; color: var(--navy-100); }
+    th.fds { background: var(--navy-2); }
+    th.fer { background: var(--gold-2); }
+    th.fer .sub { color: #FFF4DC; }
+    .col-fija { position: sticky; left: 0; z-index: 1; background: #fff; text-align: left; }
+    th.col-fija { background: var(--navy); z-index: 2; }
+    td.cargo { font-weight: 600; color: var(--suave); font-size: 12px; }
+    td.persona-c small { display: block; font-weight: 500; color: var(--suave); font-size: 11px; margin-left: 16px; }
+    td.persona-c { font-weight: 600; text-align: left; }
+    tbody tr:hover td { background-color: #FAFBFD; }
+    td.libre { background: var(--libre); color: var(--tenue); font-size: 11px; letter-spacing: .06em; }
+    td.fer { background: var(--fer); color: var(--fer-txt); font-weight: 600; }
+    td.turno { font-weight: 600; color: var(--navy); font-variant-numeric: tabular-nums; }
+    td.fuera { opacity: .45; font-style: italic; }
+    td.num { color: var(--suave); font-variant-numeric: tabular-nums; }
+    td.tot { font-weight: 700; color: var(--navy); background: var(--navy-050); font-variant-numeric: tabular-nums; }
+    td.ok { color: var(--ok); font-weight: 700; }
+    td.mal { color: var(--mal); font-weight: 700; background: var(--mal-bg); }
+    td.okc { background: var(--ok-bg); color: var(--ok); font-weight: 700; }
+    .resumen td, .resumen th { padding: 5px 4px; font-size: 11px; }
+    .resumen td.d { min-width: 40px; }
+    tr.cobertura td { background: #FAFBFD; color: var(--suave); }
+    .leyenda { font-size: 12px; color: var(--suave); margin: 4px 2px 16px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--borde-2); }
 
-    .pie { display: flex; justify-content: center; gap: 10px; padding: 14px 16px 22px; color: var(--suave); font-size: 12px;
-      border-top: 1px solid var(--borde); margin-top: 8px; }
-    .pie b { color: var(--azul); font-weight: 700; }
+    .vacio { text-align: center; padding: 56px 24px; color: var(--suave); }
+    .vacio .ic { width: 56px; height: 56px; margin: 0 auto 12px; border-radius: 14px; background: var(--navy-050); display: grid; place-items: center; font-size: 26px; }
+    .vacio h3 { color: var(--navy); font-size: 16px; margin-bottom: 4px; }
+
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px); background: var(--navy); color: #fff; padding: 11px 16px; border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(11,42,87,.3); font-size: 13px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; border-left: 4px solid var(--gold); }
+    .toast.ver { opacity: 1; transform: translate(-50%, 0); }
+
+    .pie { display: flex; justify-content: center; gap: 10px; padding: 18px 16px 24px; color: var(--suave); font-size: 12px; }
+    .pie b { color: var(--navy); font-weight: 700; font-family: var(--tit); letter-spacing: .03em; }
     .pie span::before { content: '·'; margin-right: 10px; }
+
     .solo-print, .cab-res { display: none; }
-    .cab-res { align-items: center; gap: 12px; border-bottom: 3px solid var(--oro); padding: 0 0 6px; margin-bottom: 8px; }
-    .cab-res img { height: 46px; } .cab-res .t { flex: 1; font: 700 15px 'Fraunces', Georgia, serif; color: var(--cafe); }
+
+    /* ============ Impresión ============ */
     @media print {
-      /* margen 0: el navegador ya no imprime la dirección web, fecha ni título */
+      /* margen 0: el navegador no imprime dirección web, fecha ni título */
       @page { size: A4 landscape; margin: 0; }
       body { background: #fff; padding: 9mm 9mm 14mm; font-size: 11px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .no-print, .tabs { display: none !important; }
-      .solo-print { display: block; }
-      .pie { position: fixed; left: 0; right: 0; bottom: 4mm; margin: 0; padding: 0; border: 0; font-size: 9px; background: transparent; }
-      main { padding: 0; max-width: none; }
-      .cab { padding: 6px 10px; border-bottom-width: 3px; }
-      .cab img.rest { width: 50px; height: 50px; }
-      .cab .finav img { height: 44px; }
-      .cab h1 { font-size: 18px; }
+      .barra, .lateral, .acciones-top, .barra-vista, .kpis, .toast, .no-print, .encabezado { display: none !important; }
+      .contenedor { padding: 0; max-width: none; }
+      .layout { display: block; }
+      .solo-print { display: flex; }
+      .cab-print { align-items: center; gap: 14px; border-bottom: 3px solid var(--gold); padding-bottom: 8px; margin-bottom: 10px; }
+      .cab-print img.r { width: 46px; height: 46px; border-radius: 6px; }
+      .cab-print img.f { height: 46px; }
+      .cab-print .t { flex: 1; }
+      .cab-print .t b { display: block; font: 700 16px var(--tit); color: var(--navy); }
+      .cab-print .t span { color: var(--suave); font-size: 11px; }
       .vista { display: block !important; }
       .vista.oculta-print { display: none !important; }
-      .semana { break-inside: avoid; page-break-inside: avoid; border-radius: 6px; margin-bottom: 8px; }
+      .semana { break-inside: avoid; page-break-inside: avoid; box-shadow: none; margin-bottom: 8px; border-radius: 6px; }
+      .semana-cab { padding: 5px 10px; }
       .resumen-bloque { break-before: page; page-break-before: always; }
       .resumen-bloque.primero { break-before: auto; page-break-before: auto; }
       .resumen-bloque .cab-res { display: flex; }
       .resumen-bloque.primero .cab-res { display: none; }
       .tabla-wrap { overflow: visible; }
-      th, td { padding: 3px 4px; font-size: 10px; }
+      .col-fija { position: static; }
+      th, td { padding: 3px 4px; font-size: 9.5px; }
       .resumen { table-layout: fixed; width: 100%; }
       .resumen td, .resumen th { font-size: 7px; padding: 2px 0; white-space: normal; word-break: break-word; line-height: 1.15; }
-      .resumen td.izq { font-size: 7.5px; padding-left: 2px; }
+      .resumen td.col-fija { font-size: 7.5px; padding-left: 2px; }
       .resumen td.d { min-width: 0; letter-spacing: -.2px; }
-      .firmas { display: flex; justify-content: space-around; margin-top: 34px; font-size: 11px; }
+      .resumen th .sub { font-size: 6.5px; }
+      th .sub { font-size: 8.5px; }
+      .estado { padding: 5px 10px; margin-bottom: 8px; font-size: 10px; }
+      .firmas { display: flex !important; justify-content: space-around; margin-top: 30px; font-size: 11px; }
       .firmas div { border-top: 1px solid #333; width: 220px; text-align: center; padding-top: 4px; }
-      .estado { padding: 6px 10px; }
+      .pie { position: fixed; left: 0; right: 0; bottom: 4mm; padding: 0; font-size: 9px; }
     }
+    .firmas { display: none; }
   </style>
 </head>
 <body>
-  <header class="cab">
-    <img class="rest" src="assets/logo_maiz_yuca.jpg" alt="Maíz & Yuca Cafetería">
-    <div class="tit">
-      <h1>Horarios del personal</h1>
-      <div class="sub" id="subtitulo">Maíz &amp; Yuca Cafetería · Servicio y Cocina</div>
+  <header class="barra">
+    <div class="marca">
+      <div class="logo-finav"><img id="logoFinav" src="assets/logo_finav.png" alt="FINAV Financial Advisor"></div>
+      <div class="nombre">FINAV<small>Gestión de horarios</small></div>
     </div>
-    <div class="menu-conf no-print" id="conexion" style="display:none">
-      <button type="button" class="btn-menu" onclick="alternarMenu(event)" aria-haspopup="true" aria-expanded="false" id="btnMenu">⚙ Configuración ▾</button>
-      <div class="desplegable" id="desplegable" role="menu">
-        <div class="desp-tit">🔑 Conexión con Google Sheets</div>
+    <div class="sep" aria-hidden="true"></div>
+    <div class="cliente">
+      <img id="logoRest" src="assets/logo_maiz_yuca.jpg" alt="Maíz & Yuca Cafetería">
+      <div>Cliente<b>Maíz &amp; Yuca Cafetería</b></div>
+    </div>
+    <div class="espacio"></div>
+    <div class="menu-conf" id="conexion" style="display:none">
+      <button type="button" class="btn-menu" onclick="alternarMenu(event)" aria-haspopup="true" aria-expanded="false" id="btnMenu">⚙ Configuración <span aria-hidden="true">▾</span></button>
+      <div class="desplegable" id="desplegable" role="dialog" aria-label="Conexión con Google Sheets">
+        <div class="desp-tit">Conexión con Google Sheets</div>
+        <div class="desp-sub">Datos de la API de Apps Script. Se guardan solo en este navegador.</div>
         <div id="apiUrlFila"><label for="apiUrl">URL de la API (termina en /exec)</label>
           <input id="apiUrl" placeholder="https://script.google.com/macros/s/…/exec"></div>
         <label for="apiClave">Clave de acceso</label>
         <input id="apiClave" type="password" autocomplete="current-password">
-        <button class="btn gen" type="button" style="width:100%;justify-content:center;margin-top:12px" onclick="guardarConexion()">Guardar y conectar</button>
-        <div class="nota">Se guarda solo en este navegador.</div>
+        <button class="btn primario ancho" type="button" style="margin-top:14px" onclick="guardarConexion()">Guardar y conectar</button>
         <button class="btn-link" type="button" onclick="olvidarConexion()">Cerrar sesión en este navegador</button>
       </div>
     </div>
-    <div class="finav"><img src="assets/logo_finav.png" alt="FINAV Financial Advisor"></div>
   </header>
 
-  <main>
-    <section class="no-print">
-      <div class="grid">
-        <div class="panel">
-          <h2>Periodo</h2>
-          <div class="fila2">
-            <div><label for="mes">Mes</label><select id="mes"></select></div>
-            <div><label for="anio">Año</label><input id="anio" type="number" min="2000" max="2100"></div>
-          </div>
-          <label for="modo">Feriados</label>
-          <select id="modo">
-            <option value="PAGADO">Completar 40 h con feriado pagado</option>
-            <option value="REAL">Solo horas reales trabajadas</option>
-          </select>
-          <div class="nota">Turnos, almuerzo, lunes de referencia y rotación inicial se ajustan en la hoja <b>Parámetros y Personal</b>.</div>
-        </div>
-        <div class="panel">
-          <h2>Personal</h2>
-          <div class="persona s"><span>Servicio 1</span><input id="S1"></div>
-          <div class="persona s"><span>Servicio 2</span><input id="S2"></div>
-          <div class="persona s"><span>Servicio 3</span><input id="S3" title="Única y fija: sábados y domingos 07:00–14:00"></div>
-          <div class="persona c"><span>Cocina 1</span><input id="C1"></div>
-          <div class="persona c"><span>Cocina 2</span><input id="C2"></div>
-        </div>
-        <div class="panel">
-          <h2>Feriados <small style="font:600 12px 'Source Sans 3';color:var(--suave)">(07:00 – 14:00)</small></h2>
-          <div class="fer-add">
-            <input id="ferFecha" type="date">
-            <button class="btn sec" type="button" onclick="agregarFeriado()">+ Agregar</button>
-          </div>
-          <div class="chips" id="chips"></div>
-          <div class="nota">Ese día trabajan obligatoriamente Servicio 1, Servicio 2, Cocina 1 y Cocina 2 (más Servicio 3 si es fin de semana). El resto de la semana se recalcula para llegar a 40 h.</div>
-        </div>
-      </div>
-      <div class="acciones">
-        <button class="btn gen" id="btnGenerar" onclick="generar()">▶ Generar horarios</button>
-        <button class="btn imp" onclick="imprimir()">🖨 Imprimir</button>
-        <div class="print-opts">
-          <label style="margin:0;text-transform:none;font-weight:400"><input type="checkbox" id="pSem" checked> Horario semanal</label>
-          <label style="margin:0;text-transform:none;font-weight:400"><input type="checkbox" id="pRes" checked> Resumen mensual</label>
-        </div>
-      </div>
-      <div style="height:16px"></div>
-    </section>
-
-    <div id="estado"></div>
-
-    <div class="tabs no-print">
-      <button class="tab act" data-v="sem" onclick="verTab('sem')">Horario semanal</button>
-      <button class="tab" data-v="res" onclick="verTab('res')">Resumen mensual</button>
+  <div class="contenedor">
+    <div class="solo-print cab-print">
+      <img class="r" id="pLogoRest" alt="Maíz & Yuca">
+      <div class="t"><b id="pTitulo">Horario del personal</b><span id="pSub"></span></div>
+      <img class="f" id="pLogoFinav" alt="FINAV">
     </div>
 
-    <div id="vSem" class="vista"><div class="cargando">Cargando…</div></div>
-    <div id="vRes" class="vista resumen-bloque" style="display:none"></div>
+    <div class="encabezado">
+      <div>
+        <div class="migas">Planificación mensual · Servicio y Cocina</div>
+        <h1 id="titulo">Horarios del personal</h1>
+        <div class="periodo" id="subtitulo">Configure el periodo y el personal, luego genere el horario.</div>
+      </div>
+      <div class="acciones-top">
+        <div class="opc-imp" role="group" aria-label="Contenido a imprimir">
+          <label><input type="checkbox" id="pSem" checked> Semanal</label>
+          <label><input type="checkbox" id="pRes" checked> Resumen</label>
+        </div>
+        <button class="btn secundario" id="btnImprimir" onclick="imprimir()" disabled>🖨 Imprimir</button>
+      </div>
+    </div>
 
-    <div class="firmas"><div>Elaborado por</div><div>Revisado por</div><div>Aprobado por</div></div>
-  </main>
+    <div class="layout">
+      <aside class="lateral tarjeta" aria-label="Parámetros">
+        <section class="paso">
+          <h2><span class="n">1</span>Periodo</h2>
+          <div class="fila2">
+            <div><label for="mes">Mes</label><select id="mes"></select></div>
+            <div><label for="anio">Año</label><input id="anio" type="number" min="2000" max="2100" inputmode="numeric"></div>
+          </div>
+          <label for="modo">Si faltan horas por feriado</label>
+          <select id="modo">
+            <option value="PAGADO">Completar 40 h con feriado pagado</option>
+            <option value="REAL">Contar solo horas trabajadas</option>
+          </select>
+        </section>
+        <section class="paso">
+          <h2><span class="n">2</span>Personal</h2>
+          <div class="grupo-area">Servicio</div>
+          <div class="persona"><label for="S1"><span class="punto s"></span>Servicio 1</label><input id="S1" autocomplete="off"></div>
+          <div class="persona"><label for="S2"><span class="punto s"></span>Servicio 2</label><input id="S2" autocomplete="off"></div>
+          <div class="persona"><label for="S3"><span class="punto s"></span>Servicio 3</label><input id="S3" autocomplete="off" aria-describedby="ayudaS3"></div>
+          <div class="ayuda" id="ayudaS3">Servicio 3 es fijo: sábados y domingos de 07:00 a 14:00.</div>
+          <div class="grupo-area">Cocina</div>
+          <div class="persona"><label for="C1"><span class="punto c"></span>Cocina 1</label><input id="C1" autocomplete="off"></div>
+          <div class="persona"><label for="C2"><span class="punto c"></span>Cocina 2</label><input id="C2" autocomplete="off"></div>
+          <div class="err-msg" id="errPersonal" role="alert"></div>
+        </section>
+        <section class="paso">
+          <h2><span class="n">3</span>Feriados</h2>
+          <div class="fer-add">
+            <input id="ferFecha" type="date" aria-label="Fecha de feriado">
+            <button class="btn suave" type="button" onclick="agregarFeriado()">Agregar</button>
+          </div>
+          <div class="chips" id="chips"></div>
+          <div class="ayuda">Jornada 07:00–14:00. Trabajan Servicio 1, Servicio 2, Cocina 1 y Cocina 2; el resto de la semana se ajusta a 40 h.</div>
+        </section>
+        <div class="pie-lateral">
+          <div class="aviso-cambios" id="avisoCambios" role="status">Hay cambios sin generar.</div>
+          <button class="btn primario ancho" id="btnGenerar" onclick="generar()"><span class="giro" aria-hidden="true"></span><span class="acento">▶</span><span id="txtGenerar">Generar horarios</span></button>
+        </div>
+      </aside>
+
+      <main>
+        <div class="kpis" id="kpis" aria-live="polite"></div>
+        <div id="estado" aria-live="polite"></div>
+
+        <div class="barra-vista no-print" id="barraVista" style="display:none">
+          <div class="segmentado" role="tablist">
+            <button class="tab act" role="tab" data-v="sem" onclick="verTab('sem')">Horario semanal</button>
+            <button class="tab" role="tab" data-v="res" onclick="verTab('res')">Resumen mensual</button>
+          </div>
+          <div class="ir-semana" id="irSemana"></div>
+        </div>
+
+        <div id="vSem" class="vista">
+          <div class="tarjeta vacio"><div class="ic">🗓</div><h3>Aún no hay horario</h3>Complete los pasos de la izquierda y pulse <b>Generar horarios</b>.</div>
+        </div>
+        <div id="vRes" class="vista resumen-bloque" style="display:none"></div>
+        <div class="firmas"><div>Elaborado por</div><div>Revisado por</div><div>Aprobado por</div></div>
+      </main>
+    </div>
+  </div>
 
   <footer class="pie"><b>Sistema FINAV 2026</b><span>Versión 2.1</span></footer>
+  <div class="toast" id="toast" role="status"></div>
 
 <script src="config.js"></script>
 <script>
   var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var DIAS_C = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
   var ROLES = [['S1','Servicio 1','s'],['S2','Servicio 2','s'],['S3','Servicio 3','s'],['C1','Cocina 1','c'],['C2','Cocina 2','c']];
   var feriados = [];
   var ultimo = null;
+  var cargandoForm = false;
 
   document.getElementById('mes').innerHTML = MESES.map(function (m, i) { return '<option value="' + (i + 1) + '">' + m + '</option>'; }).join('');
+  ['pLogoRest', 'pLogoFinav'].forEach(function (id, i) {
+    document.getElementById(id).src = document.getElementById(i ? 'logoFinav' : 'logoRest').src;
+  });
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function fmt(ymd) { var p = ymd.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+  function diaDe(ymd) { var p = ymd.split('-'); return DIAS_C[(new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])).getUTCDay() + 6) % 7]; }
   function num(n) { return (Math.round(n * 100) / 100).toString().replace('.', ','); }
 
-  function cargarForm(cfg, url) {
+  var toastT = null;
+  function aviso(txt) {
+    var t = document.getElementById('toast'); t.textContent = txt; t.classList.add('ver');
+    clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('ver'); }, 3200);
+  }
+
+  /* ---------- Formulario ---------- */
+  function cargarForm(cfg) {
+    cargandoForm = true;
     document.getElementById('mes').value = cfg.month;
     document.getElementById('anio').value = cfg.year;
     document.getElementById('modo').value = cfg.holidayMode;
     ROLES.forEach(function (r) { document.getElementById(r[0]).value = cfg.staff[r[0]] || ''; });
     feriados = (cfg.holidays || []).slice().sort();
     pintarChips();
+    cargandoForm = false;
+    marcarCambios(false);
   }
 
   function pintarChips() {
     document.getElementById('chips').innerHTML = feriados.length ? feriados.map(function (f, i) {
-      return '<span class="chip">' + fmt(f) + '<button title="Quitar" onclick="quitarFeriado(' + i + ')">×</button></span>';
-    }).join('') : '<span class="nota">Sin feriados registrados.</span>';
+      return '<span class="chip">' + diaDe(f) + ' ' + fmt(f) + '<button type="button" aria-label="Quitar feriado ' + fmt(f) + '" onclick="quitarFeriado(' + i + ')">×</button></span>';
+    }).join('') : '<span class="vacio-chips">Sin feriados registrados.</span>';
   }
   function agregarFeriado() {
     var v = document.getElementById('ferFecha').value;
-    if (v && feriados.indexOf(v) < 0) { feriados.push(v); feriados.sort(); pintarChips(); }
+    if (!v) { document.getElementById('ferFecha').focus(); return; }
+    if (feriados.indexOf(v) < 0) { feriados.push(v); feriados.sort(); pintarChips(); marcarCambios(true); }
     document.getElementById('ferFecha').value = '';
   }
-  function quitarFeriado(i) { feriados.splice(i, 1); pintarChips(); }
+  function quitarFeriado(i) { feriados.splice(i, 1); pintarChips(); marcarCambios(true); }
+  document.getElementById('ferFecha').addEventListener('keydown', function (e) { if (e.key === 'Enter') agregarFeriado(); });
+
+  function marcarCambios(si) {
+    if (cargandoForm) return;
+    document.getElementById('avisoCambios').classList.toggle('visible', !!si && !!ultimo);
+  }
+  ['mes', 'anio', 'modo', 'S1', 'S2', 'S3', 'C1', 'C2'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      marcarCambios(true);
+      if (this.classList.contains('error')) validarPersonal();
+    });
+  });
 
   function datosForm() {
     var staff = {};
@@ -267,9 +419,27 @@
       holidayMode: document.getElementById('modo').value, staff: staff, holidays: feriados };
   }
 
+  /** Validación en el navegador: nombres completos y sin repetir. */
+  function validarPersonal() {
+    var vistos = {}, errores = [];
+    ROLES.forEach(function (r) { document.getElementById(r[0]).classList.remove('error'); });
+    ROLES.forEach(function (r) {
+      var el = document.getElementById(r[0]), v = el.value.trim().toLowerCase();
+      if (!v) { el.classList.add('error'); errores.push('Falta el nombre de ' + r[1] + '.'); return; }
+      if (vistos[v]) {
+        el.classList.add('error'); document.getElementById(vistos[v][0]).classList.add('error');
+        errores.push('"' + el.value.trim() + '" está en ' + vistos[v][1] + ' y en ' + r[1] + '. Cada cargo necesita una persona distinta.');
+      } else vistos[v] = r;
+    });
+    var e = document.getElementById('errPersonal');
+    e.innerHTML = errores.map(esc).join('<br>'); e.style.display = errores.length ? 'block' : 'none';
+    return !errores.length;
+  }
+
   function ocupado(b) {
     var btn = document.getElementById('btnGenerar');
-    btn.disabled = b; btn.textContent = b ? 'Generando…' : '▶ Generar horarios';
+    btn.disabled = b; btn.classList.toggle('cargando', b);
+    document.getElementById('txtGenerar').textContent = b ? 'Generando…' : 'Generar horarios';
   }
 
   /* ---------- Conexión: Apps Script directo o API (GitHub Pages) ---------- */
@@ -292,35 +462,33 @@
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // evita la verificación previa de CORS
       body: JSON.stringify({ accion: accion, clave: claveAcceso(), datos: datos || null })
     }).then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (j.ok) { ok(j.data); return; }
-                err(j.error);
-      })
+      .then(function (j) { if (j.ok) ok(j.data); else err(j.error); })
       .catch(function (e) { err('No se pudo conectar con Google Sheets. Revise la URL de la API y que la aplicación web esté implementada con acceso "Cualquier usuario". (' + e.message + ')'); });
   }
 
   function mostrarConexion() {
     var c = document.getElementById('conexion');
-    if (!c) return;
     c.style.display = EN_APPS_SCRIPT ? 'none' : '';
     document.getElementById('apiUrl').value = apiUrl();
     document.getElementById('apiUrlFila').style.display = CONF.apiUrl ? 'none' : '';
     document.getElementById('apiClave').value = claveAcceso();
   }
   function menuAbierto(abrir) {
-    var c = document.getElementById('conexion');
-    c.classList.toggle('abierto', abrir);
+    document.getElementById('conexion').classList.toggle('abierto', abrir);
     document.getElementById('btnMenu').setAttribute('aria-expanded', abrir ? 'true' : 'false');
   }
   function alternarMenu(ev) {
     ev.stopPropagation();
-    menuAbierto(!document.getElementById('conexion').classList.contains('abierto'));
+    var abrir = !document.getElementById('conexion').classList.contains('abierto');
+    menuAbierto(abrir);
+    if (abrir) setTimeout(function () { document.getElementById(CONF.apiUrl ? 'apiClave' : 'apiUrl').focus(); }, 0);
   }
   document.addEventListener('click', function (ev) {
     var c = document.getElementById('conexion');
     if (c && !c.contains(ev.target)) menuAbierto(false);
   });
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') menuAbierto(false); });
+  document.getElementById('apiClave').addEventListener('keydown', function (e) { if (e.key === 'Enter') guardarConexion(); });
   function guardarConexion() {
     if (!CONF.apiUrl) guardarLocal('horarios_api_url', document.getElementById('apiUrl').value.trim());
     guardarLocal('horarios_clave', document.getElementById('apiClave').value.trim());
@@ -333,48 +501,83 @@
     mostrarConexion(); menuAbierto(false); cargar();
   }
 
+  function estado(tipo, html) {
+    var ico = { ok: '✔', mal: '!', info: 'i' }[tipo];
+    document.getElementById('estado').innerHTML = '<div class="estado ' + tipo + '"><span class="ico">' + ico + '</span><div>' + html + '</div></div>';
+  }
+
   function cargar() {
     if (!EN_APPS_SCRIPT && (!apiUrl() || !claveAcceso())) {
-      document.getElementById('estado').innerHTML = '<div class="estado info">Para empezar, abra <b>⚙ Configuración</b> (arriba a la derecha), ingrese la clave de acceso y pulse <b>Guardar y conectar</b>.</div>';
+      estado('info', 'Para empezar, abra <b>⚙ Configuración</b> (arriba a la derecha), ingrese la clave de acceso y pulse <b>Guardar y conectar</b>.');
       return;
     }
-    document.getElementById('estado').innerHTML = '<div class="estado info">Conectando con la hoja de cálculo…</div>';
+    estado('info', 'Conectando con la hoja de cálculo…');
     llamar('cargar', null, function (r) { recibir(r, false); }, mostrarError);
   }
 
   function generar() {
+    if (!validarPersonal()) { estado('mal', 'Revise el personal antes de generar.'); return; }
     ocupado(true);
     llamar('generar', datosForm(), function (r) { ocupado(false); recibir(r, true); },
       function (e) { ocupado(false); mostrarError(e); });
   }
 
   function recibir(r, generado) {
-    cargarForm(r.config, r.url);
+    cargarForm(r.config);
     if (r.error) { mostrarError(r.error); return; }
     ultimo = r.resultado;
     render(r.resultado, generado);
+    if (generado) aviso('Horario generado y guardado en Google Sheets.');
   }
 
   function mostrarError(msg) {
-    document.getElementById('estado').innerHTML = '<div class="estado mal">No se pudo generar el horario:<ul>' +
-      String(msg).split('\n').map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>';
+    estado('mal', '<b>No se pudo completar la operación.</b><ul>' +
+      String(msg).split('\n').map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>');
   }
 
+  /* ---------- Resultados ---------- */
   function render(res, generado) {
-    document.getElementById('subtitulo').textContent = 'Maíz & Yuca Cafetería · ' + res.meta.mesNombre + ' ' + res.meta.year +
-      ' · Semanas del ' + fmt(res.meta.desde) + ' al ' + fmt(res.meta.hasta);
-    var est = document.getElementById('estado');
-    if (!res.incidencias.length) {
-      est.innerHTML = '<div class="estado ok">✔ ' + (generado ? 'Horario generado y guardado en la hoja. ' : 'Vista previa. ') +
-        'Se cumplen todas las reglas: ' + res.meta.target + ' h semanales para Servicio 1-2 y Cocina 1-2, rotación de días libres, Servicio 3 fijo sábados y domingos, cobertura diaria completa.' +
-        (res.meta.feriados.length ? ' Feriados: ' + res.meta.feriados.map(fmt).join(', ') + '.' : '') + '</div>';
+    var periodo = 'Semanas del ' + fmt(res.meta.desde) + ' al ' + fmt(res.meta.hasta);
+    document.getElementById('titulo').textContent = 'Horarios · ' + res.meta.mesNombre + ' ' + res.meta.year;
+    document.getElementById('subtitulo').textContent = periodo;
+    document.getElementById('pTitulo').textContent = 'Horario del personal · ' + res.meta.mesNombre + ' ' + res.meta.year;
+    document.getElementById('pSub').textContent = 'Maíz & Yuca Cafetería · ' + periodo + ' · ' + res.meta.target + ' h semanales';
+    document.getElementById('btnImprimir').disabled = false;
+    document.getElementById('barraVista').style.display = '';
+
+    // indicadores
+    var ok40 = 0, tot40 = 0;
+    res.resumen.forEach(function (p) { if (p.rol !== 'S3') { tot40++; if (p.estado === 'OK') ok40++; } });
+    var nInc = res.incidencias.length;
+    document.getElementById('kpis').innerHTML =
+      kpi('', 'Semanas planificadas', res.semanas.length, fmt(res.meta.desde).slice(0, 5) + ' – ' + fmt(res.meta.hasta).slice(0, 5)) +
+      kpi(ok40 === tot40 ? 'verde' : 'rojo', 'Personas con ' + res.meta.target + ' h', ok40 + '<small> / ' + tot40 + '</small>', 'Servicio 1-2 y Cocina 1-2, todas las semanas') +
+      kpi('oro', 'Feriados', res.meta.feriados.length, res.meta.feriados.length ? res.meta.feriados.map(function (f) { return fmt(f).slice(0, 5); }).join(', ') : 'Ninguno en el periodo') +
+      kpi(nInc ? 'rojo' : 'verde', 'Validación', nInc ? nInc + '<small> obs.</small>' : 'OK', nInc ? 'Revise el detalle abajo' : 'Rotación, cobertura y Servicio 3');
+
+    if (!nInc) {
+      estado('ok', (generado ? '<b>Horario generado y guardado en la hoja.</b> ' : '<b>Vista previa del horario guardado.</b> ') +
+        'Se cumplen todas las reglas: ' + res.meta.target + ' h semanales, rotación de días libres, Servicio 3 fijo y cobertura diaria completa.' +
+        (generado ? '' : ' Pulse <b>Generar horarios</b> si cambia algún dato.'));
     } else {
-      est.innerHTML = '<div class="estado mal">Revise las siguientes observaciones:<ul>' +
-        res.incidencias.map(function (i) { return '<li>' + esc(i.mensaje) + '</li>'; }).join('') + '</ul></div>';
+      estado('mal', '<b>Revise las siguientes observaciones:</b><ul>' +
+        res.incidencias.map(function (i) { return '<li>' + esc(i.mensaje) + '</li>'; }).join('') + '</ul>');
     }
-    if (!generado) est.innerHTML += '<div class="estado info no-print">Pulse <b>Generar horarios</b> para guardar los cambios en las hojas "Listado Horarios" y "Resumen".</div>';
+    document.getElementById('irSemana').innerHTML = '<span>Ir a:</span>' + res.semanas.map(function (s) {
+      return '<button type="button" class="' + (s.hayFeriado ? 'f' : '') + '" onclick="irSemana(' + s.numero + ')" title="' + esc(s.etiqueta) + '">S' + s.numero + '</button>';
+    }).join('');
     document.getElementById('vSem').innerHTML = htmlSemanas(res);
     document.getElementById('vRes').innerHTML = htmlResumen(res);
+  }
+
+  function kpi(tono, et, val, det) {
+    return '<div class="tarjeta kpi ' + tono + '"><div class="et">' + et + '</div><div class="val">' + val + '</div><div class="det" title="' + esc(det) + '">' + esc(det) + '</div></div>';
+  }
+
+  function irSemana(n) {
+    verTab('sem');
+    var el = document.getElementById('semana-' + n);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function celda(a, d) {
@@ -385,23 +588,32 @@
 
   function htmlSemanas(res) {
     return res.semanas.map(function (s) {
-      var h = '<div class="semana"><h3><span>' + esc(s.etiqueta) + '</span>' + (s.hayFeriado ? '<em>incluye feriado</em>' : '') + '</h3>';
-      h += '<div class="tabla-wrap"><table><thead><tr><th>Cargo</th><th>Persona</th>';
-      s.dias.forEach(function (d) { h += '<th class="' + (d.feriado ? 'fer' : (d.dow >= 5 ? 'fds' : '')) + '">' + esc(d.etiqueta) + (d.feriado ? '<br>FERIADO' : '') + '</th>'; });
-      h += '<th>Horas trab.</th><th>Feriado pag.</th><th>Total</th><th>Estado</th></tr></thead><tbody>';
+      var todoOk = ['S1', 'S2', 'C1', 'C2'].every(function (r) { return s.totales[r].estado === 'OK'; });
+      var p = s.etiqueta.split(': ');
+      var h = '<section class="semana" id="semana-' + s.numero + '"><div class="semana-cab"><h3>' + esc(p[0]) + '<span class="rango">' + esc(p[1] || '') + '</span></h3><div>' +
+        (s.hayFeriado ? '<span class="etiqueta fer">Feriado</span> ' : '') +
+        '<span class="etiqueta ' + (todoOk ? 'ok' : 'mal') + '">' + (todoOk ? '40 h ✔' : 'Revisar') + '</span></div></div>';
+      h += '<div class="tabla-wrap"><table><thead><tr><th class="col-fija">Persona</th>';
+      s.dias.forEach(function (d) {
+        var e = d.etiqueta.split(' ');
+        h += '<th class="' + (d.feriado ? 'fer' : (d.dow >= 5 ? 'fds' : '')) + '">' + esc(e[0]) + '<span class="sub">' + (d.feriado ? 'Feriado ' : '') + esc(e[1]) + '</span></th>';
+      });
+      h += '<th>Trabajadas</th><th>Fer. pag.</th><th>Total</th><th>Estado</th></tr></thead><tbody>';
       ROLES.forEach(function (r) {
         var t = s.totales[r[0]];
         var es40 = r[0] !== 'S3';
-        h += '<tr class="' + r[2] + '"><td class="izq">' + r[1] + '</td><td class="izq">' + esc(res.meta.staff[r[0]]) + '</td>';
+        h += '<tr><td class="col-fija persona-c"><span class="punto ' + r[2] + '" style="display:inline-block;margin-right:8px"></span>' + esc(res.meta.staff[r[0]]) + '<small>' + r[1] + '</small></td>';
         s.dias.forEach(function (d) {
           var a = null; d.asignaciones.forEach(function (x) { if (x.rol === r[0]) a = x; });
           h += celda(a, d);
         });
         h += '<td class="num">' + num(t.trabajadas) + '</td><td class="num">' + (es40 ? num(t.pagadas) : '–') + '</td><td class="tot">' + num(t.total) + '</td>';
-        h += '<td class="' + (t.estado === 'OK' ? 'ok' : 'mal') + '">' + (es40 ? (t.estado === 'OK' ? '✔ OK' : '✖ ' + t.estado) : '✔ Fijo') + '</td></tr>';
+        h += '<td class="' + (t.estado === 'OK' ? 'ok' : 'mal') + '">' + (es40 ? (t.estado === 'OK' ? '✔' : '✖ ' + t.estado) : 'Fijo') + '</td></tr>';
       });
-      return h + '</tbody></table></div></div>';
-    }).join('') + '<div class="leyenda"><span><b style="background:var(--libre)"></b>Libre</span><span><b style="background:var(--fer)"></b>Feriado 07:00–14:00</span><span><i style="color:#A3A3A3">Cursiva gris</i> = día fuera del mes (completa la semana)</span><span>Horas netas (descuentan almuerzo configurado)</span></div>';
+      return h + '</tbody></table></div></section>';
+    }).join('') + '<div class="leyenda"><span><i style="background:var(--libre)"></i>Libre</span><span><i style="background:var(--fer);border-color:var(--gold-100)"></i>Feriado 07:00–14:00</span>' +
+      '<span><i style="background:var(--navy-3);border:0;border-radius:50%"></i>Servicio</span><span><i style="background:var(--gold);border:0;border-radius:50%"></i>Cocina</span>' +
+      '<span><i style="opacity:.45"></i><em>Cursiva tenue</em> = día de otro mes (completa la semana)</span><span>Horas netas (descuentan almuerzo)</span></div>';
   }
 
   function corto(a) {
@@ -418,51 +630,55 @@
       var dow = (new Date(Date.UTC(y, m - 1, d)).getUTCDay() + 6) % 7;
       dias.push({ k: k, d: d, l: letras[dow], fds: dow >= 5, fer: res.meta.feriados.indexOf(k) >= 0 });
     }
-    var cg = '<colgroup><col style="width:5.5%"><col style="width:6.5%">' + dias.map(function () { return '<col>'; }).join('') +
-      res.semanas.map(function () { return '<col style="width:2.6%">'; }).join('') + '<col style="width:3.4%"><col style="width:2.8%"><col style="width:3.4%"><col style="width:2.8%"><col style="width:2.8%"><col style="width:4.2%"></colgroup>';
-    var lr = document.querySelector('.cab img.rest').src, lf = document.querySelector('.cab .finav img').src;
-    var h = '<div class="cab-res"><img src="' + lr + '" alt="Maíz & Yuca"><div class="t">Maíz &amp; Yuca Cafetería · Resumen mensual de horarios</div><img src="' + lf + '" alt="FINAV"></div>';
-    h += '<div class="semana"><h3><span>Resumen mensual · ' + res.meta.mesNombre + ' ' + y + '</span><em>' + res.meta.target + ' h semanales</em></h3><div class="tabla-wrap"><table class="resumen">' + cg + '<thead><tr><th rowspan="2">Cargo</th><th rowspan="2">Persona</th>';
+    var cg = '<colgroup><col style="width:6.5%"><col style="width:5.5%">' + dias.map(function () { return '<col>'; }).join('') +
+      res.semanas.map(function () { return '<col style="width:2.6%">'; }).join('') + '<col style="width:3.4%"><col style="width:2.8%"><col style="width:3.4%"><col style="width:2.8%"><col style="width:2.8%"><col style="width:3.6%"></colgroup>';
+    var lr = document.getElementById('logoRest').src, lf = document.getElementById('logoFinav').src;
+    var h = '<div class="cab-res solo-print cab-print"><img class="r" src="' + lr + '" alt="Maíz & Yuca"><div class="t"><b>Resumen mensual de horarios · ' + res.meta.mesNombre + ' ' + y + '</b><span>Maíz &amp; Yuca Cafetería</span></div><img class="f" src="' + lf + '" alt="FINAV"></div>';
+    h += '<section class="semana"><div class="semana-cab"><h3>Resumen mensual<span class="rango">' + res.meta.mesNombre + ' ' + y + '</span></h3><span class="etiqueta ok">' + res.meta.target + ' h semanales</span></div><div class="tabla-wrap"><table class="resumen">' + cg + '<thead><tr><th rowspan="2" class="col-fija">Persona</th><th rowspan="2">Cargo</th>';
     dias.forEach(function (x) { h += '<th class="' + (x.fer ? 'fer' : (x.fds ? 'fds' : '')) + '">' + x.d + '</th>'; });
     res.semanas.forEach(function (s) { h += '<th class="fds">S' + s.numero + '</th>'; });
     h += '<th rowspan="2">Horas mes</th><th rowspan="2">Fer. pag.</th><th rowspan="2">Total mes</th><th rowspan="2">Días trab.</th><th rowspan="2">Días libres</th><th rowspan="2">Estado</th></tr><tr>';
-    dias.forEach(function (x) { h += '<th class="' + (x.fer ? 'fer' : (x.fds ? 'fds' : '')) + '">' + (x.fer ? 'F' : x.l) + '</th>'; });
-    res.semanas.forEach(function (s) { h += '<th class="fds" style="font-weight:400">' + s.desde.slice(8) + '/' + s.desde.slice(5, 7) + '</th>'; });
+    dias.forEach(function (x) { h += '<th class="' + (x.fer ? 'fer' : (x.fds ? 'fds' : '')) + '"><span class="sub" style="color:inherit">' + (x.fer ? 'F' : x.l) + '</span></th>'; });
+    res.semanas.forEach(function (s) { h += '<th class="fds"><span class="sub">' + s.desde.slice(8) + '/' + s.desde.slice(5, 7) + '</span></th>'; });
     h += '</tr></thead><tbody>';
     res.resumen.forEach(function (p) {
-      var cls = p.area === 'Cocina' ? 'c' : 's';
       var es40 = p.rol !== 'S3';
-      h += '<tr class="' + cls + '"><td class="izq">' + esc(p.cargo) + '</td><td class="izq">' + esc(p.persona) + '</td>';
+      h += '<tr><td class="col-fija persona-c">' + esc(p.persona) + '</td><td class="cargo">' + esc(p.cargo) + '</td>';
       dias.forEach(function (x) {
         var a = p.porDia[x.k];
         h += '<td class="d ' + (a ? (a.feriado ? 'fer' : 'turno') : 'libre') + '">' + (a ? corto(a) : 'L') + '</td>';
       });
-      p.semanas.forEach(function (s) { h += '<td class="' + (!es40 ? 'num' : (s.estado === 'OK' ? 'ok' : 'mal')) + '">' + num(s.total) + '</td>'; });
+      p.semanas.forEach(function (s) { h += '<td class="' + (!es40 ? 'num' : (s.estado === 'OK' ? 'okc' : 'mal')) + '">' + num(s.total) + '</td>'; });
       h += '<td class="num">' + num(p.horasMes) + '</td><td class="num">' + (es40 ? num(p.pagadasMes) : '–') + '</td><td class="tot">' + num(p.totalMes) + '</td><td class="num">' + p.diasTrabajados + '</td><td class="num">' + p.diasLibres + '</td>';
-      h += '<td class="' + (p.estado === 'OK' ? 'ok' : 'mal') + '">' + (p.estado === 'OK' ? '✔ OK' : '✖ Revisar') + '</td></tr>';
+      h += '<td class="' + (p.estado === 'OK' ? 'ok' : 'mal') + '">' + (p.estado === 'OK' ? '✔' : '✖') + '</td></tr>';
     });
     ['Servicio', 'Cocina'].forEach(function (area) {
-      h += '<tr><td class="izq" style="background:var(--crema)">Cobertura</td><td class="izq" style="background:var(--crema)">' + area + '</td>';
+      h += '<tr class="cobertura"><td class="col-fija persona-c">Cobertura</td><td class="cargo">' + area + '</td>';
       dias.forEach(function (x) {
         var c = 0; res.resumen.forEach(function (p) { if (p.area === area && p.porDia[x.k]) c++; });
-        h += '<td class="num">' + c + '</td>';
+        h += '<td>' + c + '</td>';
       });
-      h += '<td colspan="' + (res.semanas.length + 6) + '" style="background:var(--crema)"></td></tr>';
+      h += '<td colspan="' + (res.semanas.length + 6) + '"></td></tr>';
     });
-    h += '</tbody></table></div></div>';
-    h += '<div class="leyenda"><span>L = libre</span><span>F = feriado (07:00–14:00)</span><span>S1…S' + res.semanas.length + ' = total de horas por semana (lunes a domingo, incluye feriado pagado)</span><span>Horas mes = horas netas trabajadas dentro del mes</span></div>';
+    h += '</tbody></table></div></section>';
+    h += '<div class="leyenda"><span>L = libre</span><span>F = feriado (07:00–14:00)</span><span>S1…S' + res.semanas.length + ' = horas por semana completa (lunes a domingo)</span><span>Horas mes = horas netas trabajadas dentro del mes</span></div>';
     return h;
   }
 
   function verTab(v) {
-    document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('act', t.getAttribute('data-v') === v); });
+    document.querySelectorAll('.tab').forEach(function (t) {
+      var act = t.getAttribute('data-v') === v;
+      t.classList.toggle('act', act); t.setAttribute('aria-selected', act ? 'true' : 'false');
+    });
     document.getElementById('vSem').style.display = v === 'sem' ? '' : 'none';
     document.getElementById('vRes').style.display = v === 'res' ? '' : 'none';
+    document.getElementById('irSemana').style.visibility = v === 'sem' ? 'visible' : 'hidden';
   }
 
   function imprimir() {
-    if (!ultimo) { alert('Primero genere el horario.'); return; }
+    if (!ultimo) return;
     var sem = document.getElementById('pSem').checked, res = document.getElementById('pRes').checked;
+    if (!sem && !res) { aviso('Marque Semanal, Resumen o ambos para imprimir.'); return; }
     document.getElementById('vSem').classList.toggle('oculta-print', !sem);
     document.getElementById('vRes').classList.toggle('oculta-print', !res);
     document.getElementById('vRes').classList.toggle('primero', !sem);
