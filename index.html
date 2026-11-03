@@ -56,7 +56,16 @@
     .btn.sec { background: var(--oro-claro); color: var(--cafe); padding: 8px 12px; }
     .btn:disabled { opacity: .6; cursor: wait; }
     a.link { color: var(--azul); font-weight: 600; font-size: 13px; }
-    .conexion summary { cursor: pointer; font-weight: 700; color: var(--cafe); }
+    .menu-conf { position: relative; }
+    .btn-menu { background: transparent; color: var(--crema); border: 1px solid rgba(243,230,207,.45); border-radius: 8px;
+      padding: 8px 12px; font: 600 13px 'Source Sans 3', Arial; cursor: pointer; }
+    .btn-menu:hover, .menu-conf.abierto .btn-menu { background: rgba(255,255,255,.12); }
+    .desplegable { display: none; position: absolute; right: 0; top: calc(100% + 8px); width: 340px; max-width: calc(100vw - 32px);
+      background: #fff; color: var(--texto); border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.18); z-index: 50; }
+    .menu-conf.abierto .desplegable { display: block; }
+    .desp-tit { font-weight: 700; color: var(--cafe); margin-bottom: 2px; }
+    .btn-link { border: 0; background: none; color: var(--suave); font: 12px 'Source Sans 3', Arial, sans-serif; text-decoration: underline; cursor: pointer; padding: 6px 0 0; }
     .print-opts { display: flex; gap: 14px; font-size: 13px; color: var(--suave); }
     .print-opts input { width: auto; }
 
@@ -135,6 +144,19 @@
       <h1>Horarios del personal</h1>
       <div class="sub" id="subtitulo">Maíz &amp; Yuca Cafetería · Servicio y Cocina</div>
     </div>
+    <div class="menu-conf no-print" id="conexion" style="display:none">
+      <button type="button" class="btn-menu" onclick="alternarMenu(event)" aria-haspopup="true" aria-expanded="false" id="btnMenu">⚙ Configuración ▾</button>
+      <div class="desplegable" id="desplegable" role="menu">
+        <div class="desp-tit">🔑 Conexión con Google Sheets</div>
+        <div id="apiUrlFila"><label for="apiUrl">URL de la API (termina en /exec)</label>
+          <input id="apiUrl" placeholder="https://script.google.com/macros/s/…/exec"></div>
+        <label for="apiClave">Clave de acceso</label>
+        <input id="apiClave" type="password" autocomplete="current-password">
+        <button class="btn gen" type="button" style="width:100%;justify-content:center;margin-top:12px" onclick="guardarConexion()">Guardar y conectar</button>
+        <div class="nota">Se guarda solo en este navegador.</div>
+        <button class="btn-link" type="button" onclick="olvidarConexion()">Cerrar sesión en este navegador</button>
+      </div>
+    </div>
     <div class="finav"><img src="assets/logo_finav.png" alt="FINAV Financial Advisor"></div>
   </header>
 
@@ -172,16 +194,6 @@
           <div class="nota">Ese día trabajan obligatoriamente Servicio 1, Servicio 2, Cocina 1 y Cocina 2 (más Servicio 3 si es fin de semana). El resto de la semana se recalcula para llegar a 40 h.</div>
         </div>
       </div>
-      <details class="panel conexion" id="conexion" style="display:none">
-        <summary>🔑 Conexión con Google Sheets</summary>
-        <div class="fila2" style="margin-top:8px">
-          <div id="apiUrlFila"><label for="apiUrl">URL de la API (aplicación web de Apps Script)</label>
-            <input id="apiUrl" placeholder="https://script.google.com/macros/s/…/exec"></div>
-          <div><label for="apiClave">Clave de acceso</label><input id="apiClave" type="password" autocomplete="current-password"></div>
-        </div>
-        <div class="acciones" style="margin-top:10px"><button class="btn sec" type="button" onclick="guardarConexion()">Guardar y conectar</button>
-          <span class="nota">Se guarda solo en este navegador. La clave se define en la hoja: menú 🗓 Horarios → 🔑 Clave de acceso web.</span></div>
-      </details>
       <div class="acciones">
         <button class="btn gen" id="btnGenerar" onclick="generar()">▶ Generar horarios</button>
         <button class="btn imp" onclick="imprimir()">🖨 Imprimir</button>
@@ -268,7 +280,7 @@
       if (accion === 'cargar') run.apiCargar(); else run.apiGenerar(datos);
       return;
     }
-    if (!apiUrl() || !claveAcceso()) { mostrarConexion(true); err('Ingrese la URL de la API y la clave de acceso en "Conexión".'); return; }
+    if (!apiUrl() || !claveAcceso()) { err('Ingrese la URL de la API y la clave en ⚙ Configuración (arriba a la derecha).'); return; }
     fetch(apiUrl(), {
       method: 'POST', redirect: 'follow',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // evita la verificación previa de CORS
@@ -276,32 +288,48 @@
     }).then(function (r) { return r.json(); })
       .then(function (j) {
         if (j.ok) { ok(j.data); return; }
-        if (j.codigo === 'CLAVE') mostrarConexion(true);
-        err(j.error);
+                err(j.error);
       })
       .catch(function (e) { err('No se pudo conectar con Google Sheets. Revise la URL de la API y que la aplicación web esté implementada con acceso "Cualquier usuario". (' + e.message + ')'); });
   }
 
-  function mostrarConexion(abrir) {
+  function mostrarConexion() {
     var c = document.getElementById('conexion');
     if (!c) return;
     c.style.display = EN_APPS_SCRIPT ? 'none' : '';
     document.getElementById('apiUrl').value = apiUrl();
     document.getElementById('apiUrlFila').style.display = CONF.apiUrl ? 'none' : '';
     document.getElementById('apiClave').value = claveAcceso();
-    if (abrir) c.open = true;
   }
+  function menuAbierto(abrir) {
+    var c = document.getElementById('conexion');
+    c.classList.toggle('abierto', abrir);
+    document.getElementById('btnMenu').setAttribute('aria-expanded', abrir ? 'true' : 'false');
+  }
+  function alternarMenu(ev) {
+    ev.stopPropagation();
+    menuAbierto(!document.getElementById('conexion').classList.contains('abierto'));
+  }
+  document.addEventListener('click', function (ev) {
+    var c = document.getElementById('conexion');
+    if (c && !c.contains(ev.target)) menuAbierto(false);
+  });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') menuAbierto(false); });
   function guardarConexion() {
     if (!CONF.apiUrl) guardarLocal('horarios_api_url', document.getElementById('apiUrl').value.trim());
     guardarLocal('horarios_clave', document.getElementById('apiClave').value.trim());
-    document.getElementById('conexion').open = false;
+    menuAbierto(false);
     cargar();
+  }
+  function olvidarConexion() {
+    guardarLocal('horarios_clave', '');
+    if (!CONF.apiUrl) guardarLocal('horarios_api_url', '');
+    mostrarConexion(); menuAbierto(false); cargar();
   }
 
   function cargar() {
     if (!EN_APPS_SCRIPT && (!apiUrl() || !claveAcceso())) {
-      mostrarConexion(true);
-      document.getElementById('estado').innerHTML = '<div class="estado info">Para empezar, abra <b>🔑 Conexión con Google Sheets</b>, ingrese la clave de acceso y pulse <b>Guardar y conectar</b>.</div>';
+      document.getElementById('estado').innerHTML = '<div class="estado info">Para empezar, abra <b>⚙ Configuración</b> (arriba a la derecha), ingrese la clave de acceso y pulse <b>Guardar y conectar</b>.</div>';
       return;
     }
     document.getElementById('estado').innerHTML = '<div class="estado info">Conectando con la hoja de cálculo…</div>';
@@ -436,7 +464,7 @@
   }
 
   // Inicio: demo local, Apps Script o GitHub Pages
-  mostrarConexion(false);
+  mostrarConexion();
   if (window.DEMO) recibir(window.DEMO, true);
   else cargar();
 </script>
